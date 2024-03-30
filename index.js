@@ -25,13 +25,18 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   try {
     console.log(req.body);
+
+    // Recibo el tipo y la cantidad de participantes del form submit
     const type = req.body.type;
     const participants = req.body.participants;
+
     const response = await axios.get(
       `https://bored-api.appbrewery.com/filter?type=${type}&participants=${participants}`
     );
     const result = response.data;
     console.log(result);
+
+    // Render el index.ejs con una actividad random de las que cumplen con el criterio (la request devuelve un array)
     res.render("index.ejs", {
       data: result[Math.floor(Math.random() * result.length)],
     });
